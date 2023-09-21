@@ -14,6 +14,9 @@ import AppFrame from '../components/AppFrame';
 //la importacion de moment/locale/es hace que los dias esten en español
 import 'moment/locale/es'
 import useCityPage from '../hooks/useCityPage';
+import useCityList from '../hooks/useCityList';
+import {getCityCode} from '../utils/utils';
+import { getCountryNameByCountryCode } from '../utils/serviceCities';
 // const forecastItemListExample = [
 // 	{ hour: 18, state: "clear", temperature: 17, weekDay: "Jueves" },
 // 	{ hour: 6, state: "clouds", temperature: 18, weekDay: "Viernes" },
@@ -58,8 +61,13 @@ import useCityPage from '../hooks/useCityPage';
 const CityPage = () => {
 
 	const {chartData,forecastItemList,city,countryCode} = useCityPage()
-	// const city = 'Popayan'
-	// const country = 'Colombia'
+	const {allWeather} = useCityList([{city, countryCode}])
+	const weather = allWeather[getCityCode(city, countryCode)];
+	const state = weather && weather.state;
+	const temperature = weather && weather.temperature;
+	const country = countryCode && getCountryNameByCountryCode(countryCode);
+	const wind = weather && weather.wind;
+	const humidity = weather && weather.humidity;
 	return (
 		<AppFrame>
 			<Grid container color='white' justifyContent="space-around" margin="auto" alignItems="center" spacing={2}>
@@ -68,8 +76,13 @@ const CityPage = () => {
 				</Grid>
 				<Grid container item justifyContent="center" xs={12}>
 
-						<Weather temperature={10} state="clear" />
-						<WeatherDetails humidity={70} wind={15} />
+						<Weather temperature={temperature} state={state} />
+						{
+							humidity && wind && 
+							<WeatherDetails humidity={humidity} wind={wind} />
+						
+						}
+							
 				</Grid>
 				<Grid item xs={10}>
 					{!chartData && !forecastItemList &&  <LinearProgress color="inherit" />}
