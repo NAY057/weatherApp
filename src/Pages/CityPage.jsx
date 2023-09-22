@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 // import PropTypes from 'prop-types';
 // import { Link } from 'react-router-dom'
 import CityInfo from './../components/CityInfo';
@@ -61,7 +61,10 @@ import { getCountryNameByCountryCode } from '../utils/serviceCities';
 const CityPage = () => {
 
 	const {chartData,forecastItemList,city,countryCode} = useCityPage()
-	const {allWeather} = useCityList([{city, countryCode}])
+	const cities = useMemo(() => ([{city, countryCode}]), [city, countryCode]) 
+	// se usa el hook useMemo que guarda en memoria la ultima instancia del objeto para eviter un bucle infinito de renderizaciones que a su vez llaman la api muchas veces
+	// si el hook detecta que los objetos cambiaron entonces crea una nueva instancia de ellos
+	const {allWeather} = useCityList(cities)
 	const weather = allWeather[getCityCode(city, countryCode)];
 	const state = weather && weather.state;
 	const temperature = weather && weather.temperature;
@@ -72,7 +75,7 @@ const CityPage = () => {
 		<AppFrame>
 			<Grid container color='white' justifyContent="space-around" margin="auto" alignItems="center" spacing={2}>
 				<Grid item container justifyContent="center" margin="auto" alignItems="flex-end" xs={12}>
-					<CityInfo city={city} country={countryCode} />
+					<CityInfo city={city} country={country} />
 				</Grid>
 				<Grid container item justifyContent="center" xs={12}>
 
