@@ -18,7 +18,7 @@ const useCityList = (cities, onSetAllWeather) => {
 						return result
 						//cuando hay un estado y se una la configuracion anterior para el SetAllWeather se evita tener que poner dos parametros en el array de dependencias 
 					})*/
-					onSetAllWeather({...allWeatherAux })
+					onSetAllWeather(allWeatherAux)
 				} catch (error) {
 						if(error.response){
 							//errores que nos responde el server
