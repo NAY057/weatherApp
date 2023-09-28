@@ -4,7 +4,6 @@ import { getWeatherUrl } from '../utils/urls';
 import getAllWeather from '../utils/transform/getAllWeather';
 
 const useCityList = (cities, onSetAllWeather) => {
-	// const [allWeather, setAllWeather] = useState({})
 	const [error, setError] = useState(null)
 
 	useEffect(() => {
