@@ -18,7 +18,7 @@ const useCityList = (cities, onSetAllWeather) => {
 						return result
 						//cuando hay un estado y se una la configuracion anterior para el SetAllWeather se evita tener que poner dos parametros en el array de dependencias 
 					})*/
-					onSetAllWeather({...allWeather, ...allWeatherAux })
+					onSetAllWeather({...allWeatherAux })
 				} catch (error) {
 						if(error.response){
 							//errores que nos responde el server
@@ -80,7 +80,7 @@ const useCityList = (cities, onSetAllWeather) => {
 		// si hay un estado en el useEffect SI O SI tiene que ir en el array de dependencias.
 	}, [cities, onSetAllWeather])//este es el array de dependencias
 
-	return {allWeather, error, setError}
+	return {error, setError}
 }
 
 export default useCityList

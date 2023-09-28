@@ -21,8 +21,8 @@ const App = () => {
             <BrowserRouter>
               <Routes>
                 <Route exact path="/" element={<WelcomePage/>}/>
-                <Route exact path="/main" element={<MainPage onSetAllWeather={setAllWeather}/>}/>
-                <Route exact path="/city/:countryCode/:city" element={<CityPage/>}/>
+                <Route exact path="/main" element={<MainPage allWeather={allWeather} onSetAllWeather={setAllWeather}/>}/>
+                <Route exact path="/city/:countryCode/:city" element={<CityPage allWeather={allWeather} onSetAllWeather={setAllWeather}/>}/>
                 {/*/city/:countryCode/:city
                 los dos puntos indican que la url lleva mas atributos, en este caso lleva dos.
                 */}
