@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import { BrowserRouter, Routes, Route} from 'react-router-dom';
 // import logo from './logo.svg';
 // import CityInfo from './components/CityInfo';
@@ -13,7 +13,7 @@ import CityPage from './Pages/CityPage';
 import NotFound from './Pages/NotFound';
 import Grid from '@mui/material/Grid';
 const App = () => {
-
+  const [allWeather, setAllWeather] = useState({})
 
   return (
     <div className="App">
@@ -21,7 +21,7 @@ const App = () => {
             <BrowserRouter>
               <Routes>
                 <Route exact path="/" element={<WelcomePage/>}/>
-                <Route exact path="/main" element={<MainPage/>}/>
+                <Route exact path="/main" element={<MainPage onSetAllWeather={setAllWeather}/>}/>
                 <Route exact path="/city/:countryCode/:city" element={<CityPage/>}/>
                 {/*/city/:countryCode/:city
                 los dos puntos indican que la url lleva mas atributos, en este caso lleva dos.
