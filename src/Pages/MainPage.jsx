@@ -14,7 +14,7 @@ import {getCities} from './../utils/serviceCities'
 //     { city: 'Madrid', country: 'España', countryCode: 'ES'} 
 // ]
 
-const MainPage = ({onSetAllWeather,allWeather}) => {
+const MainPage = ({actions,data}) => {
     const navigate = useNavigate();
     
     const onClickHandler = (city, countryCode) => {
@@ -23,7 +23,7 @@ const MainPage = ({onSetAllWeather,allWeather}) => {
     }
     return (
         <AppFrame>
-            <CityList allWeather={allWeather} onSetAllWeather={onSetAllWeather} cities={getCities()} onClickCity={onClickHandler}/>
+            <CityList data={data} actions={actions} cities={getCities()} onClickCity={onClickHandler}/>
         </AppFrame>
     );
 };

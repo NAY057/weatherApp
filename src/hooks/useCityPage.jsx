@@ -1,4 +1,4 @@
-import {useState, useEffect, useDebugValue} from 'react';
+import { useEffect, useDebugValue} from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 // import moment from 'moment/moment';
@@ -7,30 +7,33 @@ import { getForecastUrl } from '../utils/urls';
 // import { toCelsius } from '../utils/utils';
 import getChartData from './../utils/transform/getChartData'
 import getForecastItemList from './../utils/transform/getForecastItemList'
-const useCityPage = () => {
-	const [chartData,setChartData] = useState(null)
-	const [forecastItemList,setForecastItemList] = useState(null)
+import {getCityCode} from '../utils/utils';
+const useCityPage = (onSetChartData,onSetForecastItemList,allChartData,allForecastItemList) => {
+
 	const {city, countryCode} = useParams()
 	// console.log('estos son los params!!!',params)
 	//el useDebugValue es como un console.log pero este se usa con el react components en la consola
 	useDebugValue(`test useDebugValue: ${city}`)
 	useEffect(()=>{
+		const cityCode = getCityCode(city, countryCode)
 		const getForecast = async() => {
             const url = getForecastUrl({city,countryCode})
 			try {
 				const {data} = await axios.get(url)
 				const dataAux = getChartData(data)
-				setChartData(dataAux)
+				onSetChartData({[cityCode]:dataAux})
 				const forecastItemListAux = getForecastItemList(data) 
-				setForecastItemList(forecastItemListAux)
+				onSetForecastItemList({[cityCode]:forecastItemListAux})
 			} catch (error) {
 				console.log(error)
 			}
 		}
-		getForecast()
-	},[city,countryCode])
+		if(allChartData && allForecastItemList && !allChartData[cityCode] && !allForecastItemList[cityCode]){
+			getForecast()
+		}
+	},[city,countryCode, onSetChartData, onSetForecastItemList,allChartData,allForecastItemList])
 
-	return {chartData, forecastItemList, city,countryCode}
+	return {city,countryCode}
 }
 
 export default useCityPage

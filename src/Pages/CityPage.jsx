@@ -58,14 +58,18 @@ import { getCountryNameByCountryCode } from '../utils/serviceCities';
 // 	}
 // ]
 
-const CityPage = ({allWeather, onSetAllWeather}) => {
-
-	const {chartData,forecastItemList,city,countryCode} = useCityPage()
+const CityPage = ({data, actions}) => {
+	const {onSetAllWeather,onSetChartData,onSetForecastItemList} = actions
+	const {allWeather,allChartData,allForecastItemList} = data
+	const {city,countryCode} = useCityPage(onSetChartData,onSetForecastItemList,allChartData,allForecastItemList)
 	const cities = useMemo(() => ([{city, countryCode}]), [city, countryCode]) 
 	// se usa el hook useMemo que guarda en memoria la ultima instancia del objeto para eviter un bucle infinito de renderizaciones que a su vez llaman la api muchas veces
 	// si el hook detecta que los objetos cambiaron entonces crea una nueva instancia de ellos
 	useCityList(cities,allWeather,onSetAllWeather)
-	const weather = allWeather[getCityCode(city, countryCode)];
+	const cityCode = getCityCode(city, countryCode)
+	const weather = allWeather[cityCode];
+	const chartData = allChartData[cityCode]
+	const forecastItemList = allForecastItemList[cityCode]
 	const state = weather && weather.state;
 	const temperature = weather && weather.temperature;
 	const country = countryCode && getCountryNameByCountryCode(countryCode);

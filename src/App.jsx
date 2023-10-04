@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useMemo } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 // import logo from './logo.svg';
 // import CityInfo from './components/CityInfo';
@@ -14,6 +14,8 @@ import NotFound from "./Pages/NotFound";
 import Grid from "@mui/material/Grid";
 const App = () => {
   const [allWeather, setAllWeather] = useState({});
+  const [allChartData, setAllChartData] = useState({});
+  const [allForecastItemList, setAllForecastItemList] = useState({});
   
   //el hook useMemo y UseCallback hace los mismo con la diferencia que callback no requiere como parametro una arrow function y tambien que es el mas recomendado para estos casos
   const onSetAllWeather = useCallback(
@@ -21,6 +23,19 @@ const App = () => {
       setAllWeather((allWeather) => ({ ...allWeather, ...weatherCity })),
     [setAllWeather]
   );
+  const onSetChartData = useCallback(
+    (chartDataCity) =>
+    setAllChartData((chartData) => ({ ...chartData, ...chartDataCity })),
+    [setAllChartData]
+  );
+  const onSetForecastItemList = useCallback(
+    (forecastItemListCity) =>
+    setAllForecastItemList((forecastItemList) => ({ ...forecastItemList, ...forecastItemListCity })),
+    [setAllForecastItemList]
+  );
+
+  const actions = useMemo( () => ({onSetAllWeather,onSetChartData,onSetForecastItemList}), [onSetAllWeather,onSetChartData,onSetForecastItemList])
+  const data = useMemo( () => ({allWeather,allChartData,allForecastItemList}), [allWeather,allChartData,allForecastItemList])
 
   return (
     <div className="App">
@@ -33,8 +48,8 @@ const App = () => {
               path="/main"
               element={
                 <MainPage
-                  allWeather={allWeather}
-                  onSetAllWeather={onSetAllWeather}
+                  data={data}
+                  actions={actions}
                 />
               }
             />
@@ -43,8 +58,8 @@ const App = () => {
               path="/city/:countryCode/:city"
               element={
                 <CityPage
-                  allWeather={allWeather}
-                  onSetAllWeather={onSetAllWeather}
+                  data={data}
+                  actions={actions}
                 />
               }
             />
