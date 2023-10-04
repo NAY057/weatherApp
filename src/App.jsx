@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState, useCallback } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 // import logo from './logo.svg';
 // import CityInfo from './components/CityInfo';
@@ -14,9 +14,10 @@ import NotFound from "./Pages/NotFound";
 import Grid from "@mui/material/Grid";
 const App = () => {
   const [allWeather, setAllWeather] = useState({});
-
-  const onSetAllWeather = useMemo(
-    () => (weatherCity) =>
+  
+  //el hook useMemo y UseCallback hace los mismo con la diferencia que callback no requiere como parametro una arrow function y tambien que es el mas recomendado para estos casos
+  const onSetAllWeather = useCallback(
+    (weatherCity) =>
       setAllWeather((allWeather) => ({ ...allWeather, ...weatherCity })),
     [setAllWeather]
   );
