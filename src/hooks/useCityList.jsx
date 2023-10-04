@@ -2,14 +2,17 @@ import {useState, useEffect} from 'react';
 import axios from 'axios';
 import { getWeatherUrl } from '../utils/urls';
 import getAllWeather from '../utils/transform/getAllWeather';
+import {getCityCode} from '../utils/utils';
 
-const useCityList = (cities, onSetAllWeather) => {
+const useCityList = (cities,allWeather,onSetAllWeather) => {
 	const [error, setError] = useState(null)
 
 	useEffect(() => {
 		const setWeather = async(city, countryCode) => {
 			const url = getWeatherUrl({city,countryCode})
-			try {
+			try {	
+					const propName = getCityCode(city, countryCode)
+					onSetAllWeather({ [propName] : {} })
 					const response = await axios.get(url)
 					const allWeatherAux = getAllWeather(response, city , countryCode)
 					/*setAllWeather( allWeather => {//aqui se pasa allWeather com funcion para que el codigo sepa cual es el ultimo objeto en el estado.
@@ -75,10 +78,12 @@ const useCityList = (cities, onSetAllWeather) => {
 		}
 
 		cities.forEach(({city, countryCode}) => {
-			setWeather(city, countryCode)
+			if(!allWeather[getCityCode(city, countryCode)]){
+				setWeather(city, countryCode)
+			}
 		});
 		// si hay un estado en el useEffect SI O SI tiene que ir en el array de dependencias.
-	}, [cities, onSetAllWeather])//este es el array de dependencias
+	}, [cities, onSetAllWeather, allWeather])//este es el array de dependencias
 
 	return {error, setError}
 }

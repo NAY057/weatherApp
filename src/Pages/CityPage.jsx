@@ -64,7 +64,7 @@ const CityPage = ({allWeather, onSetAllWeather}) => {
 	const cities = useMemo(() => ([{city, countryCode}]), [city, countryCode]) 
 	// se usa el hook useMemo que guarda en memoria la ultima instancia del objeto para eviter un bucle infinito de renderizaciones que a su vez llaman la api muchas veces
 	// si el hook detecta que los objetos cambiaron entonces crea una nueva instancia de ellos
-	useCityList(cities,onSetAllWeather)
+	useCityList(cities,allWeather,onSetAllWeather)
 	const weather = allWeather[getCityCode(city, countryCode)];
 	const state = weather && weather.state;
 	const temperature = weather && weather.temperature;
