@@ -42,7 +42,7 @@ const App = () => {
       <header className="App-header">
         <BrowserRouter>
           <Routes>
-            <Route exact path="/" element={<WelcomePage />} />
+            <Route exact path="/weatherApp" element={<WelcomePage />} />
             <Route
               exact
               path="/main"
