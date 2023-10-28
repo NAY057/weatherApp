@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useMemo } from "react";
+import React, { useState, useCallback, useMemo, useReducer } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 // import logo from './logo.svg';
 // import CityInfo from './components/CityInfo';
@@ -6,16 +6,30 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 // import CityList from './components/CityList/CityList';
 // import Forecast from './components/Forecast';
 // import ForecastChart from './components/ForecastChart';
+// import Grid from "@mui/material/Grid";
 import "./App.css";
 import WelcomePage from "./Pages/WelcomePage";
 import MainPage from "./Pages/MainPage";
 import CityPage from "./Pages/CityPage";
 import NotFound from "./Pages/NotFound";
-import Grid from "@mui/material/Grid";
 const App = () => {
+  const initialValue = {
+    allWeather: {},
+    allChartData: {},
+    allForecastItemList: {}
+  }
+  //ejemplo del objeto action: action {type: "XXX", payload: "XXX"}
+  const reducer = (state,action) => {
+
+  }
+  // El hook reducer se suele utilizar cuando se manejan estados mas complejos y tambien tiene incorporado la funcionalidad del Hook useMemo
+  const [state, dispatch] = useReducer(reducer, initialValue)
+
+  /*
   const [allWeather, setAllWeather] = useState({});
   const [allChartData, setAllChartData] = useState({});
   const [allForecastItemList, setAllForecastItemList] = useState({});
+  
   
   //el hook useMemo y UseCallback hace los mismo con la diferencia que callback no requiere como parametro una arrow function y tambien que es el mas recomendado para estos casos
   const onSetAllWeather = useCallback(
@@ -36,7 +50,7 @@ const App = () => {
 
   const actions = useMemo( () => ({onSetAllWeather,onSetChartData,onSetForecastItemList}), [onSetAllWeather,onSetChartData,onSetForecastItemList])
   const data = useMemo( () => ({allWeather,allChartData,allForecastItemList}), [allWeather,allChartData,allForecastItemList])
-
+*/
   return (
     <div className="App">
       <header className="App-header">
@@ -48,8 +62,8 @@ const App = () => {
               path="/main"
               element={
                 <MainPage
-                  data={data}
-                  actions={actions}
+                  data={state}
+                  actions={dispatch}
                 />
               }
             />
@@ -58,8 +72,8 @@ const App = () => {
               path="/city/:countryCode/:city"
               element={
                 <CityPage
-                  data={data}
-                  actions={actions}
+                  data={state}
+                  actions={dispatch}
                 />
               }
             />

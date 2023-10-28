@@ -4,7 +4,7 @@ import { getWeatherUrl } from '../utils/urls';
 import getAllWeather from '../utils/transform/getAllWeather';
 import {getCityCode} from '../utils/utils';
 
-const useCityList = (cities,allWeather,onSetAllWeather) => {
+const useCityList = (cities,allWeather,actions) => {
 	const [error, setError] = useState(null)
 
 	useEffect(() => {
@@ -12,7 +12,7 @@ const useCityList = (cities,allWeather,onSetAllWeather) => {
 			const url = getWeatherUrl({city,countryCode})
 			try {	
 					const propName = getCityCode(city, countryCode)
-					onSetAllWeather({ [propName] : {} })
+					// onSetAllWeather({ [propName] : {} })
 					const response = await axios.get(url)
 					const allWeatherAux = getAllWeather(response, city , countryCode)
 					/*setAllWeather( allWeather => {//aqui se pasa allWeather com funcion para que el codigo sepa cual es el ultimo objeto en el estado.
@@ -21,7 +21,9 @@ const useCityList = (cities,allWeather,onSetAllWeather) => {
 						return result
 						//cuando hay un estado y se una la configuracion anterior para el SetAllWeather se evita tener que poner dos parametros en el array de dependencias 
 					})*/
-					onSetAllWeather(allWeatherAux)
+					// onSetAllWeather(allWeatherAux)
+					actions({type:'SET_ALL_WEATHER', payload:{ [propName] : {} }})
+					actions({type:'SET_ALL_WEATHER', payload:allWeatherAux})
 				} catch (error) {
 						if(error.response){
 							//errores que nos responde el server
@@ -83,7 +85,7 @@ const useCityList = (cities,allWeather,onSetAllWeather) => {
 			}
 		});
 		// si hay un estado en el useEffect SI O SI tiene que ir en el array de dependencias.
-	}, [cities, onSetAllWeather, allWeather])//este es el array de dependencias
+	}, [cities, actions, allWeather])//este es el array de dependencias
 
 	return {error, setError}
 }
