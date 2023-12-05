@@ -1,13 +1,6 @@
 import React from 'react';
-// import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom'
 import { Grid } from '@mui/material'
-// import { IconContext } from 'react-icons';
-// import { WiDaySunny } from 'react-icons/wi';
-// import { IconContext } from 'react-icons';
-// import { WiDayFog } from 'react-icons/wi';
-// import {WiCloud, WiDayCloudy, WiDayFog, WiDaySunny, WiRain} from 'react-icons/wi'
-// import { IconContext } from 'react-icons';
 import { Typography } from '@material-ui/core';
 const NotFound = () => {
     return (

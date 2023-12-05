@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-// import { Grid } from '@mui/material';
 import Grid from '@mui/material/Grid';
 import IconState, { validValues } from './../IconState';
 import { IconContext } from 'react-icons';

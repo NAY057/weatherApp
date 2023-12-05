@@ -1,9 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import  Typography  from '@material-ui/core/Typography';
-//  import {WiCloud, WiDayCloudy, WiDayFog, WiDaySunny, WiRain} from 'react-icons/wi'
 import { IconContext } from 'react-icons';
-// import IconState, {validValues} from '../IconState';
 import  Skeleton from '@mui/material/Skeleton';
 import {Grid} from '@mui/material'
 import IconState, { validValues } from './../IconState'
